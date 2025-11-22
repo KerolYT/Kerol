@@ -1,9 +1,9 @@
-import { ICameraVideoTrack, IMicrophoneAudioTrack, UID } from "agora-rtc-sdk-ng";
+import { ICameraVideoTrack, IMicrophoneAudioTrack, IRemoteVideoTrack, IRemoteAudioTrack, UID } from "agora-rtc-sdk-ng";
 
 export interface IAgoraUser {
   uid: UID;
-  videoTrack?: ICameraVideoTrack;
-  audioTrack?: IMicrophoneAudioTrack;
+  videoTrack?: ICameraVideoTrack | IRemoteVideoTrack;
+  audioTrack?: IMicrophoneAudioTrack | IRemoteAudioTrack;
   hasVideo: boolean;
   hasAudio: boolean;
   audioLevel?: number; // 0 to 100

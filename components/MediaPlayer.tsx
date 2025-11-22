@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
-import { ICameraVideoTrack, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
+import { ICameraVideoTrack, IMicrophoneAudioTrack, IRemoteVideoTrack, IRemoteAudioTrack } from 'agora-rtc-sdk-ng';
 
 interface MediaPlayerProps {
-  videoTrack: ICameraVideoTrack | undefined;
-  audioTrack: IMicrophoneAudioTrack | undefined;
+  videoTrack: ICameraVideoTrack | IRemoteVideoTrack | undefined;
+  audioTrack: IMicrophoneAudioTrack | IRemoteAudioTrack | undefined;
   uid: string | number;
   isLocal?: boolean;
   audioLevel?: number;

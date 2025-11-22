@@ -71,7 +71,6 @@ const App: React.FC = () => {
   return (
     <div className="flex h-screen w-screen bg-discord-base text-discord-text-normal font-sans overflow-hidden">
       
-      {/* 1. Server Rail (Leftmost) */}
       <nav className="w-[72px] bg-discord-server py-3 flex flex-col items-center shrink-0 overflow-y-auto no-scrollbar z-20">
         <ServerIcon label="DM" color="#5865F2" />
         <div className="w-8 h-[2px] bg-discord-sidebar rounded-lg mb-2"></div>
@@ -86,18 +85,14 @@ const App: React.FC = () => {
         </div>
       </nav>
 
-      {/* 2. Channel Sidebar */}
       <div className="w-60 bg-discord-sidebar flex flex-col shrink-0 hidden md:flex rounded-tl-xl mt-0 z-10">
-        {/* Server Header */}
         <header className="h-12 border-b border-black/20 flex items-center justify-between px-4 hover:bg-white/5 cursor-pointer transition-colors shadow-sm">
           <h1 className="font-bold text-white truncate">Mierdicord</h1>
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
         </header>
 
-        {/* Channel List */}
         <div className="flex-1 overflow-y-auto py-3 custom-scrollbar">
           
-          {/* Category: Text */}
           <div className="px-2 mb-4">
             <div className="flex items-center justify-between px-2 mb-1 text-xs font-bold text-discord-text-muted uppercase hover:text-discord-text-normal cursor-pointer">
               <span>Information</span>
@@ -108,7 +103,6 @@ const App: React.FC = () => {
             <ChannelItem name="rules" />
           </div>
 
-          {/* Category: Voice */}
           <div className="px-2">
             <div className="flex items-center justify-between px-2 mb-1 text-xs font-bold text-discord-text-muted uppercase hover:text-discord-text-normal cursor-pointer">
               <span>Voice Channels</span>
@@ -120,7 +114,6 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* User Mini-Profile (Bottom) */}
         <div className="h-[52px] bg-[#232428] px-2 flex items-center justify-between">
           <div className="flex items-center gap-2 hover:bg-white/5 p-1 rounded cursor-pointer">
              <div className="w-8 h-8 rounded-full bg-discord-accent flex items-center justify-center text-white font-bold text-xs">You</div>
@@ -136,9 +129,7 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. Main Stage (Video Area) */}
       <main className="flex-1 flex flex-col bg-discord-base relative min-w-0">
-        {/* Header */}
         <header className="h-12 border-b border-black/20 flex items-center px-4 shrink-0">
            <div className="flex items-center gap-2 text-discord-text-normal font-bold text-base">
               <svg className="w-6 h-6 text-discord-text-muted" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -146,7 +137,6 @@ const App: React.FC = () => {
            </div>
         </header>
 
-        {/* Video Grid */}
         <div className="flex-1 p-4 overflow-hidden flex flex-col relative">
           <div 
             className="w-full h-full grid gap-3 transition-all duration-500 ease-in-out"
@@ -158,7 +148,7 @@ const App: React.FC = () => {
                gridAutoRows: allUsers.length <= 2 ? '1fr' : 'auto',
                alignContent: 'center',
                justifyContent: 'center',
-               maxHeight: 'calc(100vh - 140px)' // Leave room for controls
+               maxHeight: 'calc(100vh - 140px)' 
             }}
           >
             {allUsers.map((user) => (
@@ -179,7 +169,6 @@ const App: React.FC = () => {
             ))}
           </div>
 
-          {/* Floating Controls */}
           <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
              <Controls 
                localAudioTrack={localAudioTrack} 
@@ -190,7 +179,6 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      {/* 4. Member List (Right Sidebar) */}
       <aside className="w-60 bg-discord-sidebar hidden lg:flex flex-col shrink-0 border-l border-black/10">
         <header className="h-12 flex items-center px-4 font-bold text-xs text-discord-text-muted uppercase tracking-wide">
            Members — {allUsers.length}
@@ -217,7 +205,6 @@ const App: React.FC = () => {
               </div>
            ))}
            
-           {/* Mock Offline Members */}
            <div className="mt-6 mb-2 font-bold text-xs text-discord-text-muted uppercase tracking-wide px-1">Offline — 3</div>
            {['Jane Doe', 'Moderator Bot', 'Admin'].map(name => (
               <div key={name} className="flex items-center gap-3 p-2 rounded hover:bg-[#35373C] cursor-pointer group opacity-50">

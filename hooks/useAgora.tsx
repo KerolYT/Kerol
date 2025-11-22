@@ -191,7 +191,7 @@ export const useAgora = () => {
         hasAudio: user.hasAudio,
         hasVideo: user.hasVideo,
         audioTrack: user.audioTrack,
-        videoTrack: user.videoTrack as ICameraVideoTrack,
+        videoTrack: user.videoTrack,
         audioLevel: 0
       };
 
@@ -202,7 +202,7 @@ export const useAgora = () => {
         newUsers[existingUserIndex] = { 
           ...prevUser,
           // Only update tracks if the published media type corresponds
-          videoTrack: mediaType === 'video' ? user.videoTrack as ICameraVideoTrack : prevUser.videoTrack,
+          videoTrack: mediaType === 'video' ? user.videoTrack : prevUser.videoTrack,
           audioTrack: mediaType === 'audio' ? user.audioTrack : prevUser.audioTrack,
           hasAudio: mediaType === 'audio' ? true : prevUser.hasAudio,
           hasVideo: mediaType === 'video' ? true : prevUser.hasVideo
