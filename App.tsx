@@ -25,7 +25,6 @@ const ChannelItem: React.FC<{ name: string; active?: boolean; type?: 'text' | 'v
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
       ) : (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z" transform="rotate(90 12 12) scale(0.8)"/><path d="M0 0h24v24H0z" fill="none"/></svg>
-        // Using a simple hash for text
       )}
     </span> 
     <span className={`font-medium ${active ? 'text-white' : ''}`}>{type === 'text' && '#'} {name}</span>

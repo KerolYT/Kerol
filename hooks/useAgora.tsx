@@ -60,46 +60,90 @@ export const useAgora = () => {
     setLoading(true);
     setError(null);
 
-    // Timeout Promise: 10 seconds
-    const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error("Connection timed out. Please check your network or permissions.")), 10000);
-    });
-
-    const joinProcess = async () => {
-        try {
-            rtcClient.on('user-published', handleUserPublished);
-            rtcClient.on('user-unpublished', handleUserUnpublished);
-            rtcClient.on('user-left', handleUserLeft);
-            
-            // Enable volume indicator: 200ms interval, smoothness 3
-            rtcClient.enableAudioVolumeIndicator();
-            rtcClient.on('volume-indicator', handleVolumeIndicator);
-
-            await rtcClient.join(config.appId, config.channel, config.token, null);
-
-            // Create tracks *after* joining successfully
-            // Note: This prompts the user for permissions.
-            const [microphoneTrack, cameraTrack] = await AgoraRTC.createMicrophoneAndCameraTracks();
-            setLocalAudioTrack(microphoneTrack);
-            setLocalVideoTrack(cameraTrack);
-            
-            await rtcClient.publish([microphoneTrack, cameraTrack]);
-            setJoinState(true);
-            
-        } catch (err: any) {
-             // If anything fails in the process, we must cleanup
-             if (client.current) {
-                 await client.current.leave().catch(() => {});
-             }
-             throw err;
-        }
-    };
+    let createdAudioTrack: IMicrophoneAudioTrack | null = null;
+    let createdVideoTrack: ICameraVideoTrack | null = null;
 
     try {
-      // Race the join process against the timeout
+      // 1. Request permissions and create tracks.
+      // Resilient logic: Try both -> Fallback to Audio Only -> Fail
+      try {
+        const tracks = await AgoraRTC.createMicrophoneAndCameraTracks(
+          { encoderConfig: "music_standard" }, // Correct Audio config
+          { encoderConfig: "720p_1" }          // Video config
+        );
+        createdAudioTrack = tracks[0];
+        createdVideoTrack = tracks[1];
+      } catch (firstError: any) {
+        console.warn("Failed to create mic/camera tracks simultaneously:", firstError);
+        
+        // Fallback: Try just audio (Voice call mode)
+        try {
+          createdAudioTrack = await AgoraRTC.createMicrophoneAudioTrack({ encoderConfig: "music_standard" });
+          // If we get here, mic works, but camera failed. That's okay.
+        } catch (audioError: any) {
+          // If even audio fails, we can't really call.
+          throw new Error("Permission denied: Could not access Microphone. " + audioError.message);
+        }
+      }
+
+      if (!createdAudioTrack && !createdVideoTrack) {
+         throw new Error("Could not create any media tracks.");
+      }
+
+      // 2. Timeout Promise for Network Operations only: 15 seconds
+      const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error("Connection timed out. Check network/firewall.")), 15000);
+      });
+
+      const joinProcess = async () => {
+          rtcClient.on('user-published', handleUserPublished);
+          rtcClient.on('user-unpublished', handleUserUnpublished);
+          rtcClient.on('user-left', handleUserLeft);
+          
+          // Enable volume indicator: 200ms interval, smoothness 3
+          rtcClient.enableAudioVolumeIndicator();
+          rtcClient.on('volume-indicator', handleVolumeIndicator);
+
+          // Handle potential empty string for token
+          const token = config.token || null;
+          await rtcClient.join(config.appId, config.channel, token, null);
+
+          // Publish tracks we created
+          const tracksToPublish = [];
+          if (createdAudioTrack) tracksToPublish.push(createdAudioTrack);
+          if (createdVideoTrack) tracksToPublish.push(createdVideoTrack);
+          
+          if (tracksToPublish.length > 0) {
+             await rtcClient.publish(tracksToPublish);
+          }
+      };
+
+      // Race the network join process against the timeout
       await Promise.race([joinProcess(), timeoutPromise]);
 
+      // 3. Update State on Success
+      setLocalAudioTrack(createdAudioTrack);
+      setLocalVideoTrack(createdVideoTrack);
+      setJoinState(true);
+
     } catch (err: any) {
+      // If anything fails, cleanup tracks we might have created
+      if (createdAudioTrack) {
+        createdAudioTrack.stop();
+        createdAudioTrack.close();
+      }
+      if (createdVideoTrack) {
+        createdVideoTrack.stop();
+        createdVideoTrack.close();
+      }
+
+      // Clean up client
+      if (client.current) {
+         client.current.removeAllListeners();
+         await client.current.leave().catch(() => {});
+         client.current = null;
+      }
+
       console.error("Failed to join:", err);
       let message = err.message || "Failed to join channel";
       
@@ -111,17 +155,12 @@ export const useAgora = () => {
       } else if (message.includes("CAN_NOT_GET_GATEWAY_SERVER")) {
          message = "Network Error: Firewall or connection issue.";
       } else if (message.includes("Permission denied")) {
-        message = "Mic/Camera permission denied.";
+        message = "Mic/Camera permission denied. Check browser settings.";
       } else if (message.includes("timed out")) {
          message = "Connection timed out. Retry?";
       }
       
       setError(message);
-      // Clean up client on error
-      if (client.current) {
-         client.current.removeAllListeners();
-         client.current = null;
-      }
     } finally {
       setLoading(false);
     }
