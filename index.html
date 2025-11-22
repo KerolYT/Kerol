@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agora Voice & Video</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              discord: {
+                base: '#313338',    // Main chat/video area
+                sidebar: '#2b2d31', // Channel list
+                server: '#1e1f22',  // Server rail
+                active: '#404249',  // Hover/Active state
+                accent: '#5865F2',  // Blurple
+                green: '#23a559',
+                red: '#da373c',
+                text: {
+                  normal: '#dbdee1',
+                  muted: '#949ba4',
+                  header: '#f2f3f5'
+                }
+              },
+            },
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #313338;
+        color: #dbdee1;
+        font-family: 'Inter', sans-serif;
+        overflow: hidden; /* Prevent scroll on body */
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background-color: #2b2d31;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #1a1b1e;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background-color: #2b2d31;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "agora-rtc-sdk-ng": "https://aistudiocdn.com/agora-rtc-sdk-ng@^4.24.1"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
