@@ -76,7 +76,7 @@ const App: React.FC = () => {
       <nav className="w-[72px] bg-discord-server py-3 flex flex-col items-center shrink-0 overflow-y-auto no-scrollbar z-20">
         <ServerIcon label="DM" color="#5865F2" />
         <div className="w-8 h-[2px] bg-discord-sidebar rounded-lg mb-2"></div>
-        <ServerIcon active label="TS" color="#313338" /> {/* Mock This Server */}
+        <ServerIcon active label="MC" color="#313338" />
         <ServerIcon label="Gaming" img="https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?w=100&h=100&fit=crop" />
         <ServerIcon label="Music" img="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=100&h=100&fit=crop" />
         
@@ -91,7 +91,7 @@ const App: React.FC = () => {
       <div className="w-60 bg-discord-sidebar flex flex-col shrink-0 hidden md:flex rounded-tl-xl mt-0 z-10">
         {/* Server Header */}
         <header className="h-12 border-b border-black/20 flex items-center justify-between px-4 hover:bg-white/5 cursor-pointer transition-colors shadow-sm">
-          <h1 className="font-bold text-white truncate">My Community</h1>
+          <h1 className="font-bold text-white truncate">Mierdicord</h1>
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
         </header>
 
@@ -132,7 +132,7 @@ const App: React.FC = () => {
           </div>
           <div className="flex items-center">
              <button className="p-2 hover:bg-white/10 rounded"><svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg></button>
-             <button className="p-2 hover:bg-white/10 rounded"><svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L3.16 8.87c-.11.2-.06.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.11-.22.06-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
+             <button className="p-2 hover:bg-white/10 rounded"><svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L3.16 8.87c-.11.2-.06.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.11-.22.06-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6-3.6-1.62 3.6-3.6 3.6z"/></svg></button>
           </div>
         </div>
       </div>
