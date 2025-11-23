@@ -31,6 +31,28 @@ const ChannelItem: React.FC<{ name: string; active?: boolean; type?: 'text' | 'v
   </div>
 );
 
+const AIPills: React.FC = () => (
+  <div className="absolute top-6 left-0 right-0 z-40 flex justify-center items-start pointer-events-none px-4">
+    <div className="flex items-center gap-2 pointer-events-auto overflow-x-auto max-w-full pb-2 custom-scrollbar mask-gradient">
+      {[
+        { icon: "📚", text: "Crear una guía de estudio" },
+        { icon: "💡", text: "Explicar un concepto" },
+        { icon: "📝", text: "Ayúdame a redactar un ensayo" },
+        { icon: "🧠", text: "Generar preguntas de práctica" }
+      ].map((pill, i) => (
+        <button 
+          key={i}
+          className="flex items-center gap-1.5 px-4 py-2 bg-discord-server/90 backdrop-blur-md border border-white/10 rounded-full text-xs font-semibold text-discord-text-normal hover:text-white hover:bg-discord-accent hover:border-discord-accent transition-all duration-200 shadow-lg whitespace-nowrap active:scale-95 group"
+          onClick={() => console.log(pill.text)}
+        >
+          <span className="text-base group-hover:scale-110 transition-transform">{pill.icon}</span>
+          <span>{pill.text}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+);
+
 const App: React.FC = () => {
   const {
     localAudioTrack,
@@ -92,6 +114,7 @@ const App: React.FC = () => {
     alignContent: 'center',
     justifyContent: 'center',
     paddingBottom: '80px', // Space for controls
+    paddingTop: '60px', // Space for pills
   };
 
   return (
@@ -168,6 +191,9 @@ const App: React.FC = () => {
         </header>
 
         <div className="flex-1 p-4 overflow-hidden flex flex-col relative items-center justify-center">
+          
+          <AIPills />
+
           {/* Grid Container */}
           <div 
             className="transition-all duration-500 ease-in-out w-full max-w-full"
